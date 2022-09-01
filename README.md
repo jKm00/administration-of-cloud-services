@@ -63,3 +63,9 @@ vagrant halt
 ```
 vagrant destroy
 ```
+
+### Connect to VM
+
+```
+ssh ubuntu@ip -i key.pem
+```
