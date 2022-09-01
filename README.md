@@ -64,7 +64,9 @@ vagrant halt
 vagrant destroy
 ```
 
-### Connect to VM
+## Openstack commands
+
+### Connect to linux VM
 
 ```
 ssh ubuntu@ip -i key.pem
