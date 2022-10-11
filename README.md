@@ -69,7 +69,7 @@ vagrant destroy
 ### Connect to OpenStack
 
 ```
-ssh ntnu-email@login.stud.ntnu.no
+ssh ntnu-username@login.stud.ntnu.no
 ```
 
 ### Connect to linux VM
