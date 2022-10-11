@@ -10,8 +10,7 @@ resources:
     type: OS::Neutron::Subnet
     properties:
       network_id: { get_resource: my_net }
-      cidr: '10.8.1.9/24'
-      dns_nameservers: ['8.8.8.8', '8.8.4.4']
+      cidr: 192.168.0.0/24
       ip_version: 4
 
   my_key:
