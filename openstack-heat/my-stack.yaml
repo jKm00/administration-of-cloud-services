@@ -2,29 +2,52 @@ heat_template_version: 2021-04-16
 
 description: Template to deploy a VM with floating IP
 
+parameters:
+  ports:
+    type: comma_delimited_list
+    label: ports
+    default: "22"
+
+  protocols:
+    type: comma_delimited_list
+    label: protocols
+    default: "tcp,udp"
+
 resources:
-  my_net:
+  internal_net:
     type: OS::Neutron::Net
 
-  my_subnet:
+  internal_subnet:
     type: OS::Neutron::Subnet
     properties:
-      network_id: { get_resource: my_net }
-      cidr: 192.168.0.0/24
+      network_id: { get_resource: internal_net }
+      cidr: "10.8.1.0/24"
+      dns_nameservers: ["8.8.8.8", "8.8.4.4"]
       ip_version: 4
+
+  internal_router:
+    type: OS::Neutron::Router
+    properties:
+      external_gateway_info: { network: ntnu-internal }
+
+  internal_interface:
+    type: OS::Neutron::RouterInterface
+    properties:
+      router_id: { get_resource: internal_router }
+      subnet: { get_resource: internal_subnet }
+
+  instance_port:
+    type: OS::Neutron::Port
+    properties:
+      network: { get_resource: internal_net }
+      fixed_ips:
+        - subnet_id: { get_resource: internal_subnet }
 
   my_key:
     type: OS::Nova::KeyPair
     properties:
       save_private_key: true
       name: my_key
-
-  instance_port:
-    type: OS::Neutron::Port
-    properties:
-      network: { get_resource: my_net }
-      fixed_ips:
-        - subnet_id: { get_resource: my_subnet }
 
   my_instance:
     type: OS::Nova::Server
