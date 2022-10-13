@@ -2,6 +2,13 @@ heat_template_version: 2021-04-16
 
 description: Template to deploy a VM with floating IP
 
+parameters:
+  key_name:
+    type: string
+    description: Name of key pair
+    label: Key name
+    default: my_key
+
 resources:
   my_net:
     type: OS::Neutron::Net
@@ -17,7 +24,7 @@ resources:
     type: OS::Nova::KeyPair
     properties:
       save_private_key: true
-      name: my_key
+      name: { get_param: key_name }
 
   instance_port:
     type: OS::Neutron::Port
