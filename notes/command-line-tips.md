@@ -1,30 +1,37 @@
 # Command line - tip of the day
 
-- **No news is good news:** If you dont get any feedback, it succeeded
+**No news is good news:** If you dont get any feedback, it succeeded
 
 ## Commands / Flags
+
+### View your command history
 
 ```
 history
 ```
 
-View your command history
+### View all available commands
 
 ```
 --help
 ```
 
-View all available commands
+### The on line manual, comprehensive detaisl for every command
 
 ```
 man
 ```
 
-The on line manual, comprehensive details for every command.  
 _Example:_ `man ls`
+
+### What version is currently installed
 
 ```
 --version
 ```
 
-What version is currently installed
+## Connect to linux VM
+
+```
+ssh ubuntu@ip -i key.pem
+```

@@ -1,4 +1,4 @@
-# Openstack Cheatsheet
+# Openstack Stack Cheatsheet
 
 ## Connect
 
