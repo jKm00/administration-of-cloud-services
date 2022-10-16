@@ -39,6 +39,18 @@ resources:
       fixed_ips:
         - subnet_id: { get_resource: internal_subnet }
 
+  floating_ip:
+    type: OS::Neutron::FloatingIP
+    properties:
+      floating_network_id: ntnu-internal
+      port_id: { get_resource: instance_port }
+
+  association:
+    type: OS::Neutron::FloatingIPAssociation
+    properties:
+      floatingip_id: { get_resource: floating_ip }
+      port_id: { get_resource: instance_port }
+
   my_key:
     type: OS::Nova::KeyPair
     properties:
@@ -58,6 +70,11 @@ outputs:
   instance_ip:
     description: The IP address of the deployed MV
     value: { get_attr: [my_instance, first_address] }
+
+  instance_floating_ip:
+    description: Floating IP of the deployed VM
+    value: { get_attr: [floating_ip, floating_ip_address] }
+
   private_key:
     description: Private key
     value: { get_attr: [my_key, private_key] }
