@@ -1,0 +1,35 @@
+version: '3.4'
+services:
+  violeta:
+    image: node:14-alpine
+    volumes:
+      - type: bind
+        source: ./
+        target: /app
+    working_dir: /app
+    command: npm run dev
+    ports:
+      - '5000:5000'
+    environment:
+      - NODE_ENV=development
+      - PORT=5000
+      - HOST=0.0.0.0
+# services:
+#   nginx:
+#     image: nginx:1.20.2-alpine
+#     container_name: svelte-proxy
+#     ports:
+#       - '80:80'
+#     depends_on:
+#       - app
+#     networks:
+#       - default
+
+#   app:
+#     container_name: app
+#     build:
+#       context: ./
+#       dockerfile: ./Dockerfile
+#     restart: unless-stopped
+#     networks:
+#       - default
