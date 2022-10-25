@@ -1,14 +1,16 @@
 Joakim Edvardsen
 
-# Asiignment 5 - Docker & Kubernetes
+# Assignment 5 - Docker & Kubernetes
 
 ## Docker concepts
 
-### Containers
-
 ### Images
 
-### Dockerfile
+An images is a file that or template with instruction for creating a docker container.
+
+### Containers
+
+A container is a runnable instance of an image. The containers can be created, started, stopped, moved and deleted. The idea is that you define a container via an image and then you can easely spin up containers to run your application.
 
 ## Task 2 - Create a container
 
@@ -140,6 +142,19 @@ POSTGRES_DB=somedbname
 
 ![Spring-boot container](img/assignment-5-task-3-docker-spring-boot.png)
 
-Result of accessing the `/users` endpoint:
+**Result of accessing `/users` endpoint:**
 
 ![/users endpoint](img/assignment-5-task-3-users-endpoint.png)
+
+## Docker vs Kubernetes
+
+- Docker is a way of containerizing your application, meaning creating an isolated environment for the application.
+- Kubernetes is a way of structuring the containers. Grouping the containers that make up an application in a cluster.
+- Docker is great for automatic building and deployment (Before for and during deployment)
+- Kubernetes is great for scheduling and managing the containers after deployment.
+- Kubernetes has support for automatic scaling and monitoring
+
+## Sources
+
+- [Docker vs Kubernetes](https://www.youtube.com/watch?v=9_s3h_GVzZc&ab_channel=TechWorldwithNana)
+- [Docker documentation](https://docs.docker.com/get-started/overview/)
