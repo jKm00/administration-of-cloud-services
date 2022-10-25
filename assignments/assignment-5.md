@@ -68,8 +68,78 @@ docker-compose up -d
 
 ![Container inspection](img/assignment-5-task-2-spring-boot-container-inspect.png)
 
+**Image of accessing `/hello` endpoint:**
+
 ![Accessing the endpoint](img/assignment-5-task-2-spring-boot-container-endpoint.png)
 
 ## Task 3 - Create a Docker Compose with a minimume of two services
 
-Used the same basic spring-boot application from above, but this time I added a PostgreSQL database.
+For this I used the same basic spring-boot application from above, but this time I connected it to a PostgreSQL database.
+
+For this I had to create a docker-compose file that firstly boots ut the PostgreSQL container, and when this container is up and running only then will the container with the spring-boot application spin up.
+
+Heres the docker-compose file:
+
+```yaml
+version: "3.5"
+services:
+  api:
+    container_name: api
+    image: jkm00/spring-boot
+    ports:
+      - 80:8080
+    environment:
+      - "SPRING_PROFILE_ACTIVE=prod"
+      - POSTGRES_PORT=${POSTGRES_PORT}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    # Make sure database is up and running before starting the api
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    container_name: database
+    image: postgres:12.2
+    restart: always
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    ports:
+      - ${POSTGRES_PORT}:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+```
+
+_Note the `depends_on` attribute in the `api` definition_
+
+I used the same docker images for the spring-boot as I used in the task 2.
+
+Because this file is usually a file stored in a git repository, you dont want to expose all the database credentials. Thats why I've used environment variables. These variables are stored in a local `.env` file that is not pushed to the repository. Docker will automatically read any file with the `.env` extension and populate the variables in the docker-compose file.
+
+Heres an example of the `.env` file:
+
+```
+POSTGRES_NAME=somename
+POSTGRES_USER=someusername
+POSTGRES_PASSWORD=asecretpassword
+POSTGRES_PORT=5432
+POSTGRES_DB=somedbname
+```
+
+**Images of running containers:**
+
+![Network](img/assignment-5-task-3-docker-network.png)
+
+![Postgres container](img/assignment-5-task-3-docker-postgres.png)
+
+![Spring-boot container](img/assignment-5-task-3-docker-spring-boot.png)
+
+Result of accessing the `/users` endpoint:
+
+![/users endpoint](img/assignment-5-task-3-users-endpoint.png)

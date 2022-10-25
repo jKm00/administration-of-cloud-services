@@ -1,2 +1,6 @@
-no/ntnu/skytjenesterdockerdemo/controller/HelloWorld.class
+no/ntnu/skytjenesterdockerdemo/models/User.class
+no/ntnu/skytjenesterdockerdemo/controller/UserController.class
 no/ntnu/skytjenesterdockerdemo/SkytjenesterDockerDemoApplication.class
+no/ntnu/skytjenesterdockerdemo/repositories/UserRepository.class
+no/ntnu/skytjenesterdockerdemo/DummyDataInitializer.class
+no/ntnu/skytjenesterdockerdemo/controller/HelloWorld.class
